@@ -1,26 +1,24 @@
 '''
-Description: 
+Description: Detect and mark key points of human faces
 Author: shaonianruntu
 Github: https://github.com/shaonianruntu
 Date: 2020-11-04 11:29:35
-LastEditTime: 2020-11-06 18:10:31
+LastEditTime: 2020-11-06 21:38:59
 '''
-# -*- coding: utf-8 -*-
-
-import dlib
-import numpy
 import argparse
 import os
-import cv2
 import numpy as np
+
+import dlib
+import cv2
 
 DLIB_PATH = '/data/fangnan/dlib/'
 
 
 def get_landmarks(im, detector, predictor):
     rects = detector(im, 0)
-    return numpy.matrix([[int(p.x), int(p.y)]
-                         for p in predictor(im, rects[0]).parts()])
+    return np.matrix([[int(p.x), int(p.y)]
+                      for p in predictor(im, rects[0]).parts()])
 
 
 def dlib_detect_68(dlib_path, img):
@@ -28,7 +26,7 @@ def dlib_detect_68(dlib_path, img):
     predictor_path = str(
         os.path.join(dlib_path, 'shape_predictor_68_face_landmarks.dat'))
     predictor = dlib.shape_predictor(predictor_path)
-    return numpy.array(get_landmarks(img, detector, predictor))
+    return np.array(get_landmarks(img, detector, predictor))
 
 
 def dlib_detect_81(dlib_path, img):
@@ -36,7 +34,7 @@ def dlib_detect_81(dlib_path, img):
     predictor_path = str(
         os.path.join(dlib_path, 'shape_predictor_81_face_landmarks.dat'))
     predictor = dlib.shape_predictor(predictor_path)
-    return numpy.array(get_landmarks(img, detector, predictor))
+    return np.array(get_landmarks(img, detector, predictor))
 
 
 def calc_eye_point(landmark, is_right_eye=0):
@@ -137,9 +135,9 @@ if __name__ == "__main__":
         faces_path = os.path.join(opts.photo_path, name)
         if not is_image_file(faces_path):
             continue
+        save_path = os.path.join(opts.save_path, name)
         print(name)
 
-        save_path = os.path.join(opts.save_path, name)
         img = cv2.imread(faces_path, cv2.IMREAD_COLOR)
         img_gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         landmarks = dlib_detect_mode(opts.dlib_path,
