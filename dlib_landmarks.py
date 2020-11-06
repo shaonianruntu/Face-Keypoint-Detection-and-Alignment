@@ -3,7 +3,7 @@ Description: Detect and mark key points of human faces
 Author: shaonianruntu
 Github: https://github.com/shaonianruntu
 Date: 2020-11-04 11:29:35
-LastEditTime: 2020-11-06 21:38:59
+LastEditTime: 2020-11-06 21:46:32
 '''
 import argparse
 import os

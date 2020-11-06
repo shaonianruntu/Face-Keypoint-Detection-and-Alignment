@@ -3,7 +3,7 @@ Description: Align and unify all faces in dataset according to the distance betw
 Author: shaonianruntu
 Github: https://github.com/shaonianruntu
 Date: 2020-11-04 11:29:35
-LastEditTime: 2020-11-06 21:39:24
+LastEditTime: 2020-11-06 21:55:51
 '''
 import argparse
 import os
