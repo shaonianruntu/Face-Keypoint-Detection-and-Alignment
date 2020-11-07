@@ -32,7 +32,7 @@ Results are:
 | <img align="aligned face 1" src="./dlib/00.png"/> | <img align="aligned face 2" src="./dlib/01.png"/> | <img align="aligned face 3" src="./dlib/02.png"/> |
 
 
-# Support package required
+## Support package required
 - python3
 - numpy
 - PIL
@@ -40,15 +40,15 @@ Results are:
 - dlib
 - face_recognition
 
-## Installation method
+### Installation method
 > These packages may not be included in Anaconda and require additional installation
 
-### python-opencv
+#### `python-opencv`
 ```
 sudo apt-get install python-opencv
 ```
 
-### dlib
+#### `dlib`
 ```
 sudo apt-get install build-essential cmake
 sudo apt-get install libgtk-3-dev
@@ -58,7 +58,7 @@ sudo apt-get install libboost-all-dev
 pip install dlib
 ```
 
-### face_recognition
+#### `face_recognition`
 ```
 pip install face_recognition
 ```
