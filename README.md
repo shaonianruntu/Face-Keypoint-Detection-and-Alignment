@@ -33,6 +33,7 @@ Results are:
 
 
 # Support package required
+- python3
 - numpy
 - PIL
 - python-opencv
