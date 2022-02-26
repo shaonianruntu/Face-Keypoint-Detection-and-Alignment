@@ -22,6 +22,7 @@ def get_landmarks(im, detector, predictor, num):
                           for p in predictor(im, rects[0]).parts()])
     except IndexError as e:
         """can not find face and any keypoint"""
+        print("!!! Can not find a face")
         return np.matrix([[int(0), int(0)] for i in range(num)])
 
 
