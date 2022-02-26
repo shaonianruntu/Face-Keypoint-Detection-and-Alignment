@@ -57,6 +57,10 @@ sudo apt-get install libboost-all-dev
 ```
 pip install dlib
 ```
+or you can use following cmd to install `dlib` package if you are in China, same as `face_recognition`.
+```
+pip install dlib -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 #### `face_recognition`
 ```
