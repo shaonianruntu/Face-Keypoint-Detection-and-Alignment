@@ -13,12 +13,24 @@ import dlib
 import cv2
 
 DLIB_PATH = '/data/fangnan/dlib/'
+# download dlib files from http://dlib.net/files/ and put in your `DLIB_PATH`
+
+def get_landmarks(im, detector, predictor, num):
+    try:
+        rects = detector(im, 0)
+        return np.matrix([[int(p.x), int(p.y)]
+                          for p in predictor(im, rects[0]).parts()])
+    except IndexError as e:
+        """can not find face and any keypoint"""
+        return np.matrix([[int(0), int(0)] for i in range(num)])
 
 
-def get_landmarks(im, detector, predictor):
-    rects = detector(im, 0)
-    return np.matrix([[int(p.x), int(p.y)]
-                      for p in predictor(im, rects[0]).parts()])
+def dlib_detect_5(dlib_path, img):
+    detector = dlib.get_frontal_face_detector()
+    predictor_path = str(
+        os.path.join(dlib_path, 'shape_predictor_5_face_landmarks.dat'))
+    predictor = dlib.shape_predictor(predictor_path)
+    return np.array(get_landmarks(img, detector, predictor, 5))
 
 
 def dlib_detect_68(dlib_path, img):
@@ -26,7 +38,7 @@ def dlib_detect_68(dlib_path, img):
     predictor_path = str(
         os.path.join(dlib_path, 'shape_predictor_68_face_landmarks.dat'))
     predictor = dlib.shape_predictor(predictor_path)
-    return np.array(get_landmarks(img, detector, predictor))
+    return np.array(get_landmarks(img, detector, predictor, 68))
 
 
 def dlib_detect_81(dlib_path, img):
@@ -34,7 +46,7 @@ def dlib_detect_81(dlib_path, img):
     predictor_path = str(
         os.path.join(dlib_path, 'shape_predictor_81_face_landmarks.dat'))
     predictor = dlib.shape_predictor(predictor_path)
-    return np.array(get_landmarks(img, detector, predictor))
+    return np.array(get_landmarks(img, detector, predictor, 81))
 
 
 def calc_eye_point(landmark, is_right_eye=0):
@@ -84,6 +96,10 @@ def is_image_file(filename):
 
 
 def dlib_detect_mode(dlib_path, img, mode="68", dlib_five=False):
+    if mode == "5":
+        landmarks = dlib_detect_5(dlib_path, img)
+        return landmarks
+
     if mode == "68":
         landmarks = dlib_detect_68(dlib_path, img)
     else:
@@ -104,7 +120,7 @@ if __name__ == "__main__":
     parser.add_argument('--dlib_mode',
                         type=str,
                         default='81',
-                        choices=['68', '81'],
+                        choices=['5', '68', '81'],
                         help="dlib detection fineness")
     parser.add_argument('--dlib_five',
                         action='store_true',
